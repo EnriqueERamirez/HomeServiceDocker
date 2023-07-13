@@ -69,7 +69,7 @@ services:
     env_file: envs/joplin.env
 
   nginx:
-    image: nginx:alpine
+    image: nginx:latest
     restart: unless-stopped
     tty: true
     ports:
