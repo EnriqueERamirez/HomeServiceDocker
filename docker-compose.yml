@@ -136,7 +136,7 @@ services:
     image: "postgres:15"
     restart: always
     env_file: 
-      - envs/penpot-postgres.env
+      - envs/penpot-db.env
 
   penpot-redis:
     image: redis:7

@@ -1,5 +1,4 @@
 #!/bin/bash
-
 # Lista de carpetas a crear
 carpetas=(
   "nginx"
@@ -9,7 +8,12 @@ carpetas=(
   "mysql-monica"
   "openproject-pgdata"
   "openproject-assets"
+  "penpot-postgres"
+  "penpot-assets"
+  "fireflyii-upload"
+  "fireflyii-db"
 )
+
 
 # Ruta base
 ruta_base="./data"
