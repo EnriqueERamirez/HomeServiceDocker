@@ -60,13 +60,14 @@ services:
     env_file: envs/db-joplin.env
 
   joplin:
-    image: joplin/server:latest
+    image: florider89/joplin-server:latest
     depends_on:
       - db-joplin
     ports:
       - "22300:22300"
     restart: unless-stopped
     env_file: envs/joplin.env
+
   nginx:
     image: nginx:alpine
     restart: unless-stopped
