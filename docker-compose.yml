@@ -51,6 +51,22 @@ services:
     image: yuzutech/kroki-wireviz
     container_name: wireviz
     restart: always
+
+  db-joplin:
+    image: postgres:15
+    volumes:
+      - data-postgres-joplin:/var/lib/postgresql/data
+    restart: unless-stopped
+    env_file: envs/db-joplin.env
+
+  joplin:
+    image: joplin/server:latest
+    depends_on:
+      - db-joplin
+    ports:
+      - "22300:22300"
+    restart: unless-stopped
+    env_file: envs/joplin.env
   nginx:
     image: nginx:alpine
     restart: unless-stopped
@@ -63,6 +79,8 @@ services:
       - config-nginx:/etc/nginx/conf.d/
     depends_on:
       - excalidraw
+      - joplin
+      - kroki
 volumes:
   data-nginx:
     driver: local
@@ -76,3 +94,9 @@ volumes:
       o: bind
       type: none
       device: ./config/nginx
+  data-postgres-joplin:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ./data/postgres-joplin
