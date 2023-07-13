@@ -99,7 +99,7 @@ services:
     image: openproject/community:12
     container_name: openproject
     ports:
-      - 8080:80
+      - 8082:80
     env_file:
       - envs/openproject.env
     volumes:
