@@ -88,7 +88,7 @@ services:
       - data-monica:/var/www/html/storage
 
   monica-db:
-    image: mysql:5.7
+    image: mysql:latest
     container_name: monica-db
     env_file:
       - envs/monica-db.env
