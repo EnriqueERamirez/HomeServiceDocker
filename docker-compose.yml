@@ -59,20 +59,20 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - data/nginx:/var/www/nginx
-      - config/nginx:/etc/nginx/conf.d/
+      - data-nginx:/var/www/nginx
+      - config-nginx:/etc/nginx/conf.d/
     depends_on:
       - excalidraw
 volumes:
-  data:
+  data-nginx:
     driver: local
     driver_opts:
       o: bind
       type: none
-      device: ./data
-  config:
+      device: ./data/nginx
+  config-nginx:
     driver: local
     driver_opts:
       o: bind
       type: none
-      device: ./config
+      device: ./config/nginx
