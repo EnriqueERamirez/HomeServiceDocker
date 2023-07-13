@@ -106,7 +106,75 @@ services:
       - data-openproject-pgdata:/var/openproject/pgdata
       - data-openproject-assets:/var/openproject/assets
     restart: always
+    3
+  penpot-frontend:
+    image: "penpotapp/frontend:latest"
+    restart: always
+    ports:
+      - 9001:80
+    env_file: 
+      - envs/penpot-front.env
+    depends_on:
+      - penpot-backend
+      - penpot-exporter
 
+  penpot-backend:
+    image: "penpotapp/backend:latest"
+    restart: always
+    env_file: 
+      - envs/penpot-back.env
+    depends_on:
+      - penpot-postgres
+      - penpot-redis
+
+  penpot-exporter:
+    image: "penpotapp/exporter:latest"
+    restart: always
+    env_file: 
+      - envs/penpot-exporter.env
+
+  penpot-postgres:
+    image: "postgres:15"
+    restart: always
+    env_file: 
+      - envs/penpot-postgres.env
+
+  penpot-redis:
+    image: redis:7
+    restart: always
+
+  fireflyii-app:
+    image: fireflyiii/core:latest
+    container_name: firefly_iii_core
+    restart: always
+    volumes:
+      - firefly_iii_upload:/var/www/html/storage/upload
+    env_file: 
+      - ./envs/fireflyii-app.env
+    ports:
+      - 8083:8080
+    depends_on:
+      - fireflyii-db
+
+  fireflyii-db:
+    image: mariadb
+    container_name: firefly_iii_db
+    restart: always
+    env_file:
+      - ./envs/fireflyii-db.env
+    volumes:
+      - firefly_iii_db:/var/lib/mysql
+
+  fireflyii-cron:
+    image: alpine
+    restart: always
+    container_name: firefly_iii_cron
+    command: sh -c "echo \"0 3 * * * wget -qO- http://fireflyii-app:8080/api/v1/cron/${STATIC_CRON_TOKEN}\" | crontab - && crond -f -L /dev/stdout"
+    depends_on:
+      - fireflyii-app
+    environment:
+      - STATIC_CRON_TOKEN=<your-token-here>
+      
   nginx:
     image: nginx:latest
     restart: unless-stopped
@@ -124,6 +192,12 @@ services:
       - mealie
       - monica-app
       - openproject
+      - penpot-frontend
+      - penpot-backend
+      - penpot-exporter
+      - fireflyii-app
+      - fireflyii-db
+      - fireflyii-cron
 volumes:
   data-nginx:
     driver: local
@@ -173,3 +247,27 @@ volumes:
       o: bind
       type: none
       device: ./data/openproject-assets
+  data-penpot-postgres:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ./data/penpot-postgres
+  data-penpot-assets:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ./data/penpot-assets
+  firefly_iii_upload:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ./data/fireflyii-upload
+  firefly_iii_db:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ./data/fireflyii-db
