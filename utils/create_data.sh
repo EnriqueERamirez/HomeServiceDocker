@@ -12,6 +12,10 @@ carpetas=(
   "penpot-assets"
   "fireflyii-upload"
   "fireflyii-db"
+  "gitlab/config"
+  "gitlab/logs"
+  "gitlab/data"
+  "gitlab-runner"
 )
 
 

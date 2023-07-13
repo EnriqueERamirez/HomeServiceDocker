@@ -173,7 +173,27 @@ services:
       - fireflyii-app
     environment:
       - STATIC_CRON_TOKEN=<your-token-here>
-
+  gitlab-ce:
+    image: 'yrzr/gitlab-ce-arm64v8:latest'
+    restart: always
+    hostname: 'gitlab.toolshogar.cl'
+    container_name: gitlab-ce
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'http://gitlab.toolshogar.cl'
+    volumes:
+      - 'data-gitlab-config:/etc/gitlab'
+      - 'data-gitlab-logs:/var/log/gitlab'
+      - 'data-gitlab-data:/var/opt/gitlab'
+  gitlab-runner:
+    image: gitlab/gitlab-runner:alpine
+    container_name: gitlab-runner    
+    restart: always
+    depends_on:
+      - web
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - 'data-gitlab-runner:/etc/gitlab-runner'
   nginx:
     image: nginx:latest
     restart: unless-stopped
@@ -270,3 +290,27 @@ volumes:
       o: bind
       type: none
       device: ./data/fireflyii-db
+  data-gitlab-config:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ./data/gitlab/config
+  data-gitlab-logs:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ./data/gitlab/logs
+  data-gitlab-data:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ./data/gitlab/data
+  data-gitlab-runner:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ./data/gitlab-runner
