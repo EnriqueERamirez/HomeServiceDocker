@@ -72,7 +72,7 @@ services:
     image: hkotel/mealie:latest
     restart: always
     env_file: 
-      - ./mealie.env
+      - ./envs/mealie.env
     volumes:
       - data-mealie:/app/data
   monica-app:
