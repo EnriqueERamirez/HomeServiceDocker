@@ -67,6 +67,45 @@ services:
       - "22300:22300"
     restart: unless-stopped
     env_file: envs/joplin.env
+  mealie:
+    container_name: mealie
+    image: hkotel/mealie:latest
+    restart: always
+    env_file: 
+      - ./mealie.env
+    volumes:
+      - data-mealie:/app/data
+  monica-app:
+    image: monica
+    container_name: monica-app
+    ports:
+      - 8081:80
+    depends_on:
+      - monica-db
+    env_file:
+      - envs/monica.env
+    volumes:
+      - data-monica:/var/www/html/storage
+
+  monica-db:
+    image: mysql:5.7
+    container_name: monica-db
+    env_file:
+      - envs/monica-db.env
+    volumes:
+      - mysql-monica:/var/lib/mysql
+
+  openproject:
+    image: openproject/community:12
+    container_name: openproject
+    ports:
+      - 8080:80
+    env_file:
+      - envs/openproject.env
+    volumes:
+      - data-openproject-pgdata:/var/openproject/pgdata
+      - data-openproject-assets:/var/openproject/assets
+    restart: always
 
   nginx:
     image: nginx:latest
@@ -82,6 +121,9 @@ services:
       - excalidraw
       - joplin
       - kroki
+      - mealie
+      - monica-app
+      - openproject
 volumes:
   data-nginx:
     driver: local
@@ -101,3 +143,33 @@ volumes:
       o: bind
       type: none
       device: ./data/postgres-joplin
+  data-mealie:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ./data/mealie
+  data-monica:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ./data/monica
+  mysql-monica:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ./data/mysql-monica
+  data-openproject-pgdata:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ./data/openproject-pgdata
+  data-openproject-assets:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ./data/openproject-assets
