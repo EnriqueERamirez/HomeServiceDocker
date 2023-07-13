@@ -106,7 +106,6 @@ services:
       - data-openproject-pgdata:/var/openproject/pgdata
       - data-openproject-assets:/var/openproject/assets
     restart: always
-    3
   penpot-frontend:
     image: "penpotapp/frontend:latest"
     restart: always
@@ -174,7 +173,7 @@ services:
       - fireflyii-app
     environment:
       - STATIC_CRON_TOKEN=<your-token-here>
-      
+
   nginx:
     image: nginx:latest
     restart: unless-stopped
