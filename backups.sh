@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Carpeta de destino para los respaldos
-backup_dir="/ruta/destino/backups"
+backup_dir="./backups"
 timestamp=$(date +"%Y%m%d%H%M%S")
 backup_file="backup_$timestamp.tar.gz"
 
