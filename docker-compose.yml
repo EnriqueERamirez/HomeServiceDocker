@@ -123,8 +123,8 @@ services:
     env_file: 
       - envs/penpot-back.env
     depends_on:
-      - penpotpostgres
-      - penpotredis
+      - penpot-postgres
+      - penpot-redis
 
   penpot-exporter:
     image: "penpotapp/exporter:latest"
@@ -132,13 +132,13 @@ services:
     env_file: 
       - envs/penpot-exporter.env
 
-  penpotpostgres:
+  penpot-postgres:
     image: "postgres:15"
     restart: always
     env_file: 
       - envs/penpot-db.env
 
-  penpotredis:
+  penpot-redis:
     image: redis:7
     restart: always
 
