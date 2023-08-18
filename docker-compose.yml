@@ -115,7 +115,9 @@ services:
       - envs/penpot-front.env
     depends_on:
       - penpot-backend
-      - penpot-exporter
+    volumes:
+      - data-penpot-assets:/opt/data/assets
+
 
   penpot-backend:
     image: "penpotapp/backend:latest"
@@ -138,6 +140,8 @@ services:
     restart: always
     env_file: 
       - envs/penpot-db.env
+    volumes:
+      - data-penpot-postgres:/var/lib/postgresql/data
 
   penpot-redis:
     image: redis:7
