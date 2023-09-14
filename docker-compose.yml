@@ -90,6 +90,7 @@ services:
   monica-db:
     image: mysql:latest
     container_name: monica-db
+    command: --default-authentication-plugin=mysql_native_password  
     env_file:
       - envs/monica-db.env
     volumes:
