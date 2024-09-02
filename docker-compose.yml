@@ -235,98 +235,18 @@ services:
       - gitlab-ce
 volumes:
   data-nginx:
-    driver: local
-    driver_opts:
-      o: bind
-      type: none
-      device: ./data/nginx
   config-nginx:
-    driver: local
-    driver_opts:
-      o: bind
-      type: none
-      device: ./config/nginx
   data-postgres-joplin:
-    driver: local
-    driver_opts:
-      o: bind
-      type: none
-      device: ./data/postgres-joplin
   data-mealie:
-    driver: local
-    driver_opts:
-      o: bind
-      type: none
-      device: ./data/mealie
   data-monica:
-    driver: local
-    driver_opts:
-      o: bind
-      type: none
-      device: ./data/monica
   mysql-monica:
-    driver: local
-    driver_opts:
-      o: bind
-      type: none
-      device: ./data/mysql-monica
   data-openproject-pgdata:
-    driver: local
-    driver_opts:
-      o: bind
-      type: none
-      device: ./data/openproject-pgdata
   data-openproject-assets:
-    driver: local
-    driver_opts:
-      o: bind
-      type: none
-      device: ./data/openproject-assets
   data-penpot-postgres:
-    driver: local
-    driver_opts:
-      o: bind
-      type: none
-      device: ./data/penpot-postgres
   data-penpot-assets:
-    driver: local
-    driver_opts:
-      o: bind
-      type: none
-      device: ./data/penpot-assets
   firefly_iii_upload:
-    driver: local
-    driver_opts:
-      o: bind
-      type: none
-      device: ./data/fireflyii-upload
   firefly_iii_db:
-    driver: local
-    driver_opts:
-      o: bind
-      type: none
-      device: ./data/fireflyii-db
   data-gitlab-config:
-    driver: local
-    driver_opts:
-      o: bind
-      type: none
-      device: ./data/gitlab/config
   data-gitlab-logs:
-    driver: local
-    driver_opts:
-      o: bind
-      type: none
-      device: ./data/gitlab/logs
   data-gitlab-data:
-    driver: local
-    driver_opts:
-      o: bind
-      type: none
-      device: ./data/gitlab/data
   data-gitlab-runner:
-    driver: local
-    driver_opts:
-      o: bind
-      type: none
-      device: ./data/gitlab-runner
