@@ -218,7 +218,7 @@ services:
       - "443:443"
     volumes:
       - data-nginx:/var/www/nginx
-      - config-nginx:/etc/nginx/conf.d/
+      - ./config/nginx:/etc/nginx/conf.d/
     depends_on:
       - excalidraw
       - joplin
@@ -235,7 +235,6 @@ services:
       - gitlab-ce
 volumes:
   data-nginx:
-  config-nginx:
   data-postgres-joplin:
   data-mealie:
   data-monica:
